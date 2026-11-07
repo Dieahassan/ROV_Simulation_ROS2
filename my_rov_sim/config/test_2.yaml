@@ -1,0 +1,21 @@
+ekf_filter_node:
+  ros__parameters:
+    frequency: 30.0
+    two_d_mode: false
+    publish_tf: true
+
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: rov2/pressure
+    world_frame: odom
+
+    # --- Sensor 2: Depth Pose ---
+    pose0: /rov_2/depth_pose
+    pose0_config: [false, false, true,   # Z position فقط
+                   false, false, false,
+                   false, false, false,
+                   false, false, false,
+                   false, false, false]
+    pose0_differential: false
+    pose0_queue_size: 10
+    pose0_qos: best_effort

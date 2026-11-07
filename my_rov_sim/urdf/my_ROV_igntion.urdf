@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot
+  name="rov_1">
+  <link name="base_footprint"/>
+<joint name="base_footprint_joint" type="fixed">
+  <parent link="base_footprint"/>
+  <child link="base_link"/>
+</joint>
+  <link
+    name="base_link">
+    <inertial>
+      <origin xyz="0.159 0.171 0.15" rpy="0 0 0" />
+      <mass value="50" />
+      <inertia ixx="0.0505" ixy="-1.21e-05" ixz="1.07e-05" iyy="0.0600" iyz="-8.75e-07" izz="0.1019" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="lift_up">
+    <inertial>
+      <mass value="0.0058"/>
+      <inertia ixx="1.6e-06" ixy="0" ixz="0" iyy="1.6e-06" iyz="0" izz="2.6e-06"/>
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/lift_up.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/lift_up.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="UL"
+    type="continuous">
+    <origin
+      xyz="-0.0529199396877001 0.0509900750595212 0.175500000000006"
+      rpy="1.57079632679491 -0.45312503037382 -2.35619449019236" />
+    <parent
+      link="base_link" />
+    <child
+      link="lift_up" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="right_up">
+    <inertial>
+      <mass value="0.0058"/>
+      <inertia ixx="1.6e-06" ixy="0" ixz="0" iyy="1.6e-06" iyz="0" izz="2.6e-06"/>
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/right_up.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/right_up.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="UR"
+    type="continuous">
+    <origin
+      xyz="-0.00947584627198964 0.333148520029066 0.175499999999999"
+      rpy="1.57079632679491 -0.701208787008059 -0.785398163397455" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_up" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="lift_mid">
+    <inertial><mass value="0.0058"/><inertia ixx="1.6e-06" iyy="1.6e-06" izz="2.6e-06" ixy="0" ixz="0" iyz="0"/></inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/lift_mid.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/lift_mid.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ML"
+    type="continuous">
+    <origin
+      xyz="0.174090416903533 0.0126722819953148 0.133228713117643"
+      rpy="0 0 -2.57299408678259" />
+    <parent
+      link="base_link" />
+    <child
+      link="lift_mid" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="right_mid">
+    <inertial><mass value="0.0058"/><inertia ixx="1.6e-06" iyy="1.6e-06" izz="2.6e-06" ixy="0" ixz="0" iyz="0"/></inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/right_mid.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/right_mid.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="MR"
+    type="continuous">
+    <origin
+      xyz="0.174090416903534 0.328022219677562 0.163711516362133"
+      rpy="0 0 1.39499251824528" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_mid" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="lift_back">
+    <inertial><mass value="0.0058"/><inertia ixx="1.6e-06" iyy="1.6e-06" izz="2.6e-06" ixy="0" ixz="0" iyz="0"/></inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/lift_back.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/lift_back.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="BL"
+    type="continuous">
+    <origin
+      xyz="0.363801622039246 0.0136909236040086 0.1755"
+      rpy="1.57079632679489 0.643582719399226 -0.785398163397455" />
+    <parent
+      link="base_link" />
+    <child
+      link="lift_back" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="right_back">
+    <inertial><mass value="0.0058"/><inertia ixx="1.6e-06" iyy="1.6e-06" izz="2.6e-06" ixy="0" ixz="0" iyz="0"/></inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/right_back.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/right_back.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="BR"
+    type="continuous">
+    <origin
+      xyz="0.313278899206751 0.377526300901358 0.175500000000004"
+      rpy="1.5707963267949 -1.11891915891974 0.785398163397428" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_back" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="camra_up_Link">
+    <inertial><mass value="0.0058"/><inertia ixx="1.6e-06" iyy="1.6e-06" izz="2.6e-06" ixy="0" ixz="0" iyz="0"/></inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/camra_up_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/camra_up_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="c_1"
+    type="fixed">
+    <origin
+      xyz="0 0.17035 0.265"
+      rpy="1.5708 -0.16779 1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="camra_up_Link" />
+    <axis
+      xyz="0.69718 -0.11809 -0.70711" />
+  </joint>
+  <link
+    name="camera_down_Link">
+    <inertial>
+      <origin
+        xyz="0.0700000000000243 0.0134651110066621 0.0176886754266543"
+        rpy="0 0 0" />
+      <mass
+        value="0.357378778382105" />
+      <inertia
+        ixx="0.000241255074661488"
+        ixy="3.10339262938512E-20"
+        ixz="-1.31533916436402E-20"
+        iyy="0.000362030246556546"
+        iyz="-2.10425510263711E-20"
+        izz="0.000408743563973482" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/camera_down_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find rov_1)/meshes/camera_down_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="c_2"
+    type="fixed">
+    <origin
+      xyz="0.14018 0.18806 0.054237"
+      rpy="1.5708 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="camera_down_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+
+  <gazebo reference="camra_up_Link">
+        <sensor name="camera_up" type="camera">
+            <pose>0 0 0 0 1.57 0</pose>
+            <visualize>true</visualize>
+            <update_rate>10.0</update_rate>
+            <alwaysOn>true</alwaysOn>
+            <topic>camera_up/image_raw</topic>
+            <gz_frame_id>camra_up_Link</gz_frame_id>
+            <camera name="intel_realsense_r200">
+                <camera_info_topic>camera_up/camera_info</camera_info_topic>
+                <horizontal_fov>1.0</horizontal_fov>
+                <image>
+                    <width>640</width>
+                    <height>320</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.05</near>
+                    <far>8.0</far>
+                </clip>
+            </camera>
+        </sensor>
+  </gazebo>
+
+  <gazebo reference="camera_down_Link">
+        <sensor name="camera_dwon" type="camera">
+            <pose>0 0 0 0 1.57 0</pose>
+            <visualize>true</visualize>
+            <update_rate>10.0</update_rate>
+            <alwaysOn>true</alwaysOn>
+            <topic>camera_down/image_raw</topic>
+            <gz_frame_id>camera_down_Link</gz_frame_id>
+            <camera name="intel_realsense_r200">
+                <camera_info_topic>camera_down/camera_info</camera_info_topic>
+                <horizontal_fov>1.0</horizontal_fov>
+                <image>
+                    <width>640</width>
+                    <height>320</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.05</near>
+                    <far>8.0</far>
+                </clip>
+            </camera>
+        </sensor>
+  </gazebo>
+
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Red</material>
+    <static>0</static>
+    <self_collide>0</self_collide>
+    <allow_auto_disable>1</allow_auto_disable>
+  </gazebo>
+  <gazebo reference="camera_down_Link">
+    <material>Gazebo/Black</material>
+    <static>0</static>
+    <self_collide>0</self_collide>
+    <allow_auto_disable>1</allow_auto_disable>
+  </gazebo>
+  <gazebo reference="camra_up_Link">
+    <material>Gazebo/Black</material>
+    <static>0</static>
+    <self_collide>0</self_collide>
+    <allow_auto_disable>1</allow_auto_disable>
+  </gazebo>
+  
+<!-- Joint controllers -->
+  <!--6 motor-->
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-joint-position-controller-system"
+        name="ignition::gazebo::systems::JointPositionController">
+        <joint_name>BR</joint_name>
+        <p_gain>0.1</p_gain>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-joint-position-controller-system"
+        name="ignition::gazebo::systems::JointPositionController">
+        <joint_name>BL</joint_name>
+        <p_gain>0.1</p_gain>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-joint-position-controller-system"
+        name="ignition::gazebo::systems::JointPositionController">
+        <joint_name>MR</joint_name>
+        <p_gain>0.1</p_gain>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-joint-position-controller-system"
+        name="ignition::gazebo::systems::JointPositionController">
+        <joint_name>ML</joint_name>
+        <p_gain>0.1</p_gain>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-joint-position-controller-system"
+        name="ignition::gazebo::systems::JointPositionController">
+        <joint_name>UR</joint_name>
+        <p_gain>0.1</p_gain>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-joint-position-controller-system"
+        name="ignition::gazebo::systems::JointPositionController">
+        <joint_name>UL</joint_name>
+        <p_gain>0.1</p_gain>
+      </plugin>
+    </gazebo>
+    <!--  6- thruster  -->
+
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-thruster-system"
+        name="ignition::gazebo::systems::Thruster">
+        <namespace>rov</namespace>
+        <joint_name>BR</joint_name>
+        <thrust_coefficient>0.004422</thrust_coefficient>
+        <fluid_density>1000</fluid_density>
+        <propeller_diameter>0.2</propeller_diameter>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-thruster-system"
+        name="ignition::gazebo::systems::Thruster">
+        <namespace>rov</namespace>
+        <joint_name>BL</joint_name>
+        <thrust_coefficient>0.004422</thrust_coefficient>
+        <fluid_density>1000</fluid_density>
+        <propeller_diameter>0.2</propeller_diameter>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-thruster-system"
+        name="ignition::gazebo::systems::Thruster">
+        <namespace>rov</namespace>
+        <joint_name>MR</joint_name>
+        <thrust_coefficient>0.004422</thrust_coefficient>
+        <fluid_density>1000</fluid_density>
+        <propeller_diameter>0.2</propeller_diameter>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-thruster-system"
+        name="ignition::gazebo::systems::Thruster">
+        <namespace>rov</namespace>
+        <joint_name>ML</joint_name>
+        <thrust_coefficient>0.004422</thrust_coefficient>
+        <fluid_density>1000</fluid_density>
+        <propeller_diameter>0.2</propeller_diameter>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-thruster-system"
+        name="ignition::gazebo::systems::Thruster">
+        <namespace>rov</namespace>
+        <joint_name>UR</joint_name>
+        <thrust_coefficient>0.004422</thrust_coefficient>
+        <fluid_density>1000</fluid_density>
+        <propeller_diameter>0.2</propeller_diameter>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-thruster-system"
+        name="ignition::gazebo::systems::Thruster">
+        <namespace>rov</namespace>
+        <joint_name>UL</joint_name>
+        <thrust_coefficient>0.004422</thrust_coefficient>
+        <fluid_density>1000</fluid_density>
+        <propeller_diameter>0.2</propeller_diameter>
+      </plugin>
+    </gazebo>
+
+      <!-- Lift and drag -->
+
+      <!-- Vertical fin -->
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-lift-drag-system"
+        name="ignition::gazebo::systems::LiftDrag">
+        <air_density>1000</air_density>
+        <cla>4.13</cla>
+        <cla_stall>-1.1</cla_stall>
+        <cda>0.2</cda>
+        <cda_stall>0.03</cda_stall>
+        <alpha_stall>0.17</alpha_stall>
+        <a0>0</a0>
+        <area>0.0244</area>
+        <upward>0 1 0</upward>
+        <forward>1 0 0</forward>
+        <link_name>lift_up</link_name>
+        <cp>0 0 0</cp>
+      </plugin>
+    </gazebo>
+
+      <!-- Horizontal fin -->
+    <gazebo>
+      <plugin
+        filename="ignition-gazebo-lift-drag-system"
+        name="ignition::gazebo::systems::LiftDrag">
+        <air_density>1000</air_density>
+        <cla>4.13</cla>
+        <cla_stall>-1.1</cla_stall>
+        <cda>0.2</cda>
+        <cda_stall>0.03</cda_stall>
+        <alpha_stall>0.17</alpha_stall>
+        <a0>0</a0>
+        <area>0.0244</area>
+        <upward>0 0 1</upward>
+        <forward>1 0 0</forward>
+        <link_name>lift_up</link_name>
+        <cp>0 0 0</cp>
+      </plugin>
+    </gazebo>
+    <gazebo reference="base_link">
+      <!-- hydrodynamics plugin-->
+      <plugin
+        filename="ignition-gazebo-hydrodynamics-system"
+        name="ignition::gazebo::systems::Hydrodynamics">
+
+        <xDotU>-4.876161</xDotU>
+        <yDotV>-126.324739</yDotV>
+        <zDotW>-126.324739</zDotW>
+        <kDotP>0</kDotP>
+        <mDotQ>-33.46</mDotQ>
+        <nDotR>-33.46</nDotR>
+        <xUabsU>-6.2282</xUabsU>
+        <xU>0</xU>
+        <yVabsV>-601.27</yVabsV>
+        <yV>0</yV>
+        <zWabsW>-601.27</zWabsW>
+        <zW>0</zW>
+        <kPabsP>-0.1916</kPabsP>
+        <kP>0</kP>
+        <mQabsQ>-632.698957</mQabsQ>
+        <mQ>0</mQ>
+        <nRabsR>-632.698957</nRabsR>
+        <nR>0</nR>
+        
+      </plugin>
+    </gazebo>
+
+</robot>

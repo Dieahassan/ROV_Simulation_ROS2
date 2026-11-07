@@ -1,0 +1,1004 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="rov2" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:include filename="materials.xacro" />
+  <link
+    name="my_rov_base">
+    <inertial>
+      <origin
+        xyz="-0.0028643 8.8818E-16 6.4393E-15"
+        rpy="0 0 0" />
+      <mass
+        value="3.1871" />
+      <inertia
+        ixx="0.019702"
+        ixy="-2.9523E-17"
+        ixz="-1.4136E-16"
+        iyy="0.017168"
+        iyz="-3.4571E-19"
+        izz="0.017168" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/base_link.STL" />
+      </geometry>
+      <material name="glass">
+        <color
+          rgba="1 1 1 0.001" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="top_plate">
+    <inertial>
+      <origin
+        xyz="-0.0017483 -0.0095341 1.5232E-06"
+        rpy="0 0 0" />
+      <mass
+        value="1.4703" />
+      <inertia
+        ixx="0.022494"
+        ixy="-6.6694E-06"
+        ixz="1.193E-05"
+        iyy="0.049265"
+        iyz="5.3426E-09"
+        izz="0.027051" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/top_plate.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/top_plate.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="top_plate"
+    type="fixed">
+    <origin
+      xyz="0 0 0.11279"
+      rpy="1.5708 0 0" />
+    <parent
+      link="my_rov_base" />
+    <child
+      link="top_plate" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="down_plate">
+    <inertial>
+      <origin
+        xyz="-0.0021884 0.0020982 8.1321E-07"
+        rpy="0 0 0" />
+      <mass
+        value="1.522" />
+      <inertia
+        ixx="0.022382"
+        ixy="-4.1082E-06"
+        ixz="-2.7067E-07"
+        iyy="0.049733"
+        iyz="5.3342E-10"
+        izz="0.027797" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/down_plate.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/down_plate.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="down_plate"
+    type="fixed">
+    <origin
+      xyz="0.0091292 0 -0.13221"
+      rpy="1.5708 0 0" />
+    <parent
+      link="my_rov_base" />
+    <child
+      link="down_plate" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="down_part">
+    <inertial>
+      <origin
+        xyz="-0.29643 0.17087 0.064979"
+        rpy="0 0 0" />
+      <mass
+        value="0.86643" />
+      <inertia
+        ixx="0.00053211"
+        ixy="-5.7164E-10"
+        ixz="4.3358E-14"
+        iyy="0.00044151"
+        iyz="-8.1232E-13"
+        izz="0.00054764" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/down_part.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/down_part.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="down_part"
+    type="fixed">
+    <origin
+      xyz="0.16122 -0.12 0.1741"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="down_plate" />
+    <child
+      link="down_part" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="camera_holder">
+    <inertial>
+      <origin
+        xyz="-0.056412 -0.028603 0.0006902"
+        rpy="0 0 0" />
+      <mass
+        value="0.56314" />
+      <inertia
+        ixx="0.00087425"
+        ixy="-3.347E-16"
+        ixz="-2.2538E-14"
+        iyy="0.00093036"
+        iyz="1.2865E-13"
+        izz="0.00040143" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/camera_holder.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/camera_holder.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_holder"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="down_plate" />
+    <child
+      link="camera_holder" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="camera_down">
+    <inertial>
+      <origin
+        xyz="-0.011738 -0.00032593 -8.2157E-15"
+        rpy="0 0 0" />
+      <mass
+        value="0.1748" />
+      <inertia
+        ixx="0.0001871"
+        ixy="8.9663E-20"
+        ixz="1.5204E-20"
+        iyy="0.00012797"
+        iyz="-2.1786E-19"
+        izz="0.00018583" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/camera_down.STL" />
+      </geometry>
+      <material
+        name="glass">
+        <color
+          rgba="1 1 1 0.001" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/camera_down.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_down"
+    type="fixed">
+    <origin
+      xyz="-0.047429 -0.05675 3.0645E-05"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="camera_holder" />
+    <child
+      link="camera_down" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="mh_fr">
+    <inertial>
+      <origin
+        xyz="0.0061156 -0.0047209 0.031054"
+        rpy="0 0 0" />
+      <mass
+        value="0.27746" />
+      <inertia
+        ixx="0.00071009"
+        ixy="1.3123E-07"
+        ixz="1.4826E-07"
+        iyy="0.00014168"
+        iyz="9.1453E-08"
+        izz="0.00066799" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mh_fr.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mh_fr.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="mh_fr"
+    type="fixed">
+    <origin
+      xyz="0.13208 0.11756 0.13586"
+      rpy="0 0.7854 0" />
+    <parent
+      link="down_plate" />
+    <child
+      link="mh_fr" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="fr">
+    <inertial>
+      <origin
+        xyz="-0.0051456 3.1118E-06 -5.0002E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.005824" />
+      <inertia
+        ixx="2.6826E-06"
+        ixy="4.6538E-11"
+        ixz="-3.1567E-12"
+        iyy="1.6184E-06"
+        iyz="-3.7598E-10"
+        izz="1.6192E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/fr.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/fr.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j_fr"
+    type="continuous">
+    <origin
+      xyz="0.015086 -0.0070601 0.049"
+      rpy="0 0 0" />
+    <parent
+      link="mh_fr" />
+    <child
+      link="fr" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="mh_mr">
+    <inertial>
+      <origin
+        xyz="-3.3169E-05 -0.0054573 0.031055"
+        rpy="0 0 0" />
+      <mass
+        value="0.27746" />
+      <inertia
+        ixx="0.00066075"
+        ixy="-1.2005E-07"
+        ixz="-6.7674E-08"
+        iyy="0.00019083"
+        iyz="1.4828E-07"
+        izz="0.0006678" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mh_mr.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mh_mr.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="mh_mr"
+    type="fixed">
+    <origin
+      xyz="-0.0091292 0.11765 0.10868"
+      rpy="0 0 0" />
+    <parent
+      link="down_plate" />
+    <child
+      link="mh_mr" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="mr">
+    <inertial>
+      <origin
+        xyz="-0.0051448 1.0788E-06 -1.813E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0058236" />
+      <inertia
+        ixx="2.6823E-06"
+        ixy="-2.671E-11"
+        ixz="1.3187E-12"
+        iyy="1.6184E-06"
+        iyz="-3.606E-10"
+        izz="1.6188E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mr.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mr.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j_mr"
+    type="continuous">
+    <origin
+      xyz="0 -0.0020595 0.049"
+      rpy="-3.1416 0 1.5708" />
+    <parent
+      link="mh_mr" />
+    <child
+      link="mr" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="mh_br">
+    <inertial>
+      <origin
+        xyz="-0.0061156 -0.0048096 0.031054"
+        rpy="0 0 0" />
+      <mass
+        value="0.27746" />
+      <inertia
+        ixx="0.00071009"
+        ixy="1.3123E-07"
+        ixz="-1.4826E-07"
+        iyy="0.00014168"
+        iyz="-9.1451E-08"
+        izz="0.00066799" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mh_br.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mh_br.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="mh_br"
+    type="fixed">
+    <origin
+      xyz="-0.15034 0.11756 0.13586"
+      rpy="0 -0.7854 0" />
+    <parent
+      link="down_plate" />
+    <child
+      link="mh_br" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="br">
+    <inertial>
+      <origin
+        xyz="-0.0054555 3.3454E-06 -8.634E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.0058249" />
+      <inertia
+        ixx="2.6829E-06"
+        ixy="5.3017E-11"
+        ixz="-6.5236E-12"
+        iyy="1.6195E-06"
+        iyz="-3.6728E-10"
+        izz="1.6185E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/br.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/br.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j_br"
+    type="continuous">
+    <origin
+      xyz="-0.015086 -0.0070601 0.049"
+      rpy="0 0 0" />
+    <parent
+      link="mh_br" />
+    <child
+      link="br" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="mh_fl">
+    <inertial>
+      <origin
+        xyz="-0.0061156 -0.0048096 0.031054"
+        rpy="0 0 0" />
+      <mass
+        value="0.27746" />
+      <inertia
+        ixx="0.00071009"
+        ixy="1.3123E-07"
+        ixz="-1.4826E-07"
+        iyy="0.00014168"
+        iyz="-9.1451E-08"
+        izz="0.00066799" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mh_fl.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mh_fl.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="mh_fl"
+    type="fixed">
+    <origin
+      xyz="0.13208 0.11756 -0.13585"
+      rpy="-3.1416 0.7854 -3.1416" />
+    <parent
+      link="down_plate" />
+    <child
+      link="mh_fl" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="fl">
+    <inertial>
+      <origin
+        xyz="-0.0035398 3.5481E-07 -2.1045E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0058242" />
+      <inertia
+        ixx="2.6826E-06"
+        ixy="1.6854E-11"
+        ixz="4.5527E-12"
+        iyy="1.6189E-06"
+        iyz="-5.9644E-10"
+        izz="1.6187E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/fl.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/fl.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j_fl"
+    type="continuous">
+    <origin
+      xyz="-0.013481 -0.0070601 0.049"
+      rpy="3.1416 0 3.1416" />
+    <parent
+      link="mh_fl" />
+    <child
+      link="fl" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="mh_ml">
+    <inertial>
+      <origin
+        xyz="-3.3168E-05 0.031055 -0.017688"
+        rpy="0 0 0" />
+      <mass
+        value="0.27746" />
+      <inertia
+        ixx="0.00066075"
+        ixy="-6.7671E-08"
+        ixz="1.2006E-07"
+        iyy="0.0006678"
+        iyz="-1.4828E-07"
+        izz="0.00019083" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mh_ml.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mh_ml.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="mh_ml"
+    type="fixed">
+    <origin
+      xyz="-0.0091292 0.11765 -0.10867"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="down_plate" />
+    <child
+      link="mh_ml" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ml">
+    <inertial>
+      <origin
+        xyz="-0.0070605 -1.342E-06 -1.7066E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0058244" />
+      <inertia
+        ixx="2.6827E-06"
+        ixy="-1.6087E-11"
+        ixz="-4.6167E-12"
+        iyy="1.6183E-06"
+        iyz="1.0565E-10"
+        izz="1.6194E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/ml.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/ml.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j_ml"
+    type="continuous">
+    <origin
+      xyz="0 0.049 -0.030627"
+      rpy="1.5708 -1.5708 0" />
+    <parent
+      link="mh_ml" />
+    <child
+      link="ml" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="mh_bl">
+    <inertial>
+      <origin
+        xyz="-0.0061156 -0.0047209 -0.031054"
+        rpy="0 0 0" />
+      <mass
+        value="0.27746" />
+      <inertia
+        ixx="0.00071009"
+        ixy="-1.3123E-07"
+        ixz="1.4826E-07"
+        iyy="0.00014168"
+        iyz="-9.1451E-08"
+        izz="0.00066799" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mh_bl.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/mh_bl.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="mh_bl"
+    type="fixed">
+    <origin
+      xyz="-0.15034 0.11756 -0.13585"
+      rpy="0 0.7854 0" />
+    <parent
+      link="down_plate" />
+    <child
+      link="mh_bl" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="bl">
+    <inertial>
+      <origin
+        xyz="-0.0070611 1.4689E-06 -2.9476E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0058247" />
+      <inertia
+        ixx="2.6829E-06"
+        ixy="4.077E-11"
+        ixz="-2.3633E-11"
+        iyy="1.6186E-06"
+        iyz="-3.6491E-10"
+        izz="1.6194E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/bl.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/bl.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="j_bl"
+    type="continuous">
+    <origin
+      xyz="-0.013481 -0.0070601 -0.049"
+      rpy="0 0 0" />
+    <parent
+      link="mh_bl" />
+    <child
+      link="bl" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="camera_f">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/camera_f.STL" />
+      </geometry>
+      <material
+        name="glass">
+        <color
+          rgba="1 1 1 0.001" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://my_rov_sim/data/rov_2/meshe/rviz/camera_f.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_f"
+    type="fixed">
+    <origin
+      xyz="0.165 0 0"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="my_rov_base" />
+    <child
+      link="camera_f" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+<!---  <link name="rov2/imu"/>
+<joint name="rov2/imu_joint" type="fixed">
+  <parent link="rov2/imu"/>
+  <child link="my_rov_base"/>
+  <origin xyz="0 0 0" rpy="0 0 0"/>
+</joint>-->
+</robot>

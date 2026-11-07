@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_ROV_igntion">
+
+    <!-- Import scara_final urdf file -->
+    <xacro:include filename="$(find rov_1)/urdf/my_ROV_igntion.urdf" />
+</robot>
+

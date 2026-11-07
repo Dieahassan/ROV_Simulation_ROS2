@@ -1,0 +1,757 @@
+<?xml version="1.0"?>
+<scenario>
+    <!-- ============================================================
+         ENVIRONMENT
+         ============================================================ -->
+    <environment>
+        <ned latitude="41.7777" longitude="3.0333"/>
+
+        <ocean>
+            <water density="1031.0" jerlov="0.15"/>
+            <waves height="0.0"/>
+            <particles enabled="true"/>
+        </ocean>
+
+        <atmosphere>
+            <sun azimuth="20.0" elevation="50.0"/>
+        </atmosphere>
+    </environment>
+
+    <!-- ============================================================
+         MATERIALS
+         Self-contained so this file does not depend on an external
+         materials_looks.scn. Merge with your own material set if you
+         already include one elsewhere.
+         ============================================================ -->
+    <materials>
+        <material name="Concrete" density="2400.0" restitution="0.2"/>
+        <material name="Steel" density="7800.0" restitution="0.3"/>
+        <material name="Glass" density="2500.0" restitution="0.1"/>
+        <material name="Plastic" density="1200.0" restitution="0.4"/>
+        <material name="Rock" density="2600.0" restitution="0.1"/>
+        <material name="Acrylic" density="300.0" restitution="0.9"/>
+		<material name="Foam" density="30.0" restitution="0.3"/>
+		<material name="Polyethylene" density="400.0" restitution="0.75"/>
+		<material name="Ballast" density="408.0" restitution="0.75"/>
+
+
+        <friction_table>
+            <friction material1="Concrete" material2="Concrete" static="0.5" dynamic="0.4"/>
+            <friction material1="Concrete" material2="Steel" static="0.4" dynamic="0.3"/>
+            <friction material1="Concrete" material2="Glass" static="0.3" dynamic="0.2"/>
+            <friction material1="Concrete" material2="Plastic" static="0.4" dynamic="0.3"/>
+            <friction material1="Concrete" material2="Rock" static="0.5" dynamic="0.4"/>
+            <friction material1="Steel" material2="Steel" static="0.3" dynamic="0.2"/>
+            <friction material1="Steel" material2="Glass" static="0.2" dynamic="0.15"/>
+            <friction material1="Steel" material2="Plastic" static="0.3" dynamic="0.2"/>
+            <friction material1="Steel" material2="Rock" static="0.4" dynamic="0.3"/>
+            <friction material1="Glass" material2="Glass" static="0.1" dynamic="0.1"/>
+            <friction material1="Glass" material2="Plastic" static="0.2" dynamic="0.15"/>
+            <friction material1="Glass" material2="Rock" static="0.2" dynamic="0.15"/>
+            <friction material1="Plastic" material2="Plastic" static="0.3" dynamic="0.2"/>
+            <friction material1="Plastic" material2="Rock" static="0.3" dynamic="0.2"/>
+            <friction material1="Rock" material2="Rock" static="0.6" dynamic="0.5"/>
+        </friction_table>
+    </materials>
+
+    <!-- ============================================================
+         LOOKS
+         High visual-contrast set: flat wall tone + saturated,
+         checker-like obstacle colors so ORB-SLAM has plenty of
+         well-separated corner/edge features to track.
+         ============================================================ -->
+    <looks>
+        <look name="wall_concrete" gray="0.55" roughness="0.9"/>
+        <look name="wall_concrete_dark" gray="0.35" roughness="0.9"/>
+        <look name="floor_concrete" gray="0.45" roughness="0.95"/>
+        <look name="window_frame" rgb="0.15 0.15 0.15" roughness="0.6" metalness="0.7"/>
+        <look name="window_glass" rgb="0.55 0.75 0.85" roughness="0.05" metalness="0.1"/>
+        <look name="pipe_rust" rgb="0.55 0.25 0.1" roughness="0.7" metalness="0.4"/>
+        <look name="vent_steel" rgb="0.6 0.6 0.65" roughness="0.4" metalness="0.8"/>
+        <look name="obstacle_red" rgb="0.75 0.1 0.1" roughness="0.5"/>
+        <look name="obstacle_yellow" rgb="0.85 0.75 0.05" roughness="0.5"/>
+        <look name="obstacle_blue" rgb="0.1 0.25 0.75" roughness="0.5"/>
+        <look name="obstacle_green" rgb="0.15 0.6 0.2" roughness="0.5"/>
+        <look name="obstacle_orange" rgb="0.85 0.45 0.05" roughness="0.5"/>
+        <look name="obstacle_white" rgb="0.85 0.85 0.85" roughness="0.4"/>
+        <look name="obstacle_black" rgb="0.08 0.08 0.08" roughness="0.4"/>
+        <look name="dock_steel" rgb="0.5 0.5 0.55" roughness="0.3" metalness="0.9"/>
+        <look name="Red" rgb="1.0 0.0 0.0" roughness="1" metalness="0.0"/>
+        <look name="blue" rgb="0.0 0.0 1.0" roughness="0.8" metalness="0.0"/>
+		<look name="cyan" rgb="0.0 1.0 1.0" roughness="0.8" metalness="0.0"/>
+        <look name="White" rgb="1.0 1.0 1.0" roughness="0.8" metalness="0.0"/>
+        <look name="black" gray="0.01" roughness="0.2" metalness="0.0"/>
+        <look name="transparent" gray="1.0" roughness="0.0" metalness="0.0"/>
+    </looks>
+
+    <!-- ============================================================
+         FLOOR
+         ============================================================ -->
+    <static name="TankFloor" type="cylinder">
+        <dimensions radius="10.00" height="0.20"/>
+        <world_transform xyz="0.0 0.0 -0.10" rpy="0.0 0.0 0.0"/>
+        <material name="Concrete"/>
+        <look name="floor_concrete"/>
+    </static>
+
+    <!-- ============================================================
+         OUTER WALL
+         32 flat panels approximating a circle of outer diameter 20.0 m /
+         inner diameter 16.0 m (wall thickness 2.0 m), height 4.0 m.
+         Every 4th panel is replaced by a window (frame + glass pane)
+         for extra visual/geometric variety.
+         ============================================================ -->
+    <!-- Panel 0: WINDOW -->
+    <static name="WallFrame_0" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="9.000 0.000 2.000" rpy="0.0 0.0 90.000"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WindowGlass_0" type="box">
+        <dimensions xyz="1.235 0.05 2.200"/>
+        <world_transform xyz="9.000 0.000 2.000" rpy="0.0 0.0 90.000"/>
+        <material name="Glass"/>
+        <look name="window_glass"/>
+    </static>
+    <static name="WindowFrameTrim_0" type="box">
+        <dimensions xyz="1.385 0.12 2.350"/>
+        <world_transform xyz="9.000 0.000 2.000" rpy="0.0 0.0 90.000"/>
+        <material name="Steel"/>
+        <look name="window_frame"/>
+    </static>
+
+    <static name="WallPanel_1" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="8.827 1.756 2.000" rpy="0.0 0.0 101.250"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WallPanel_2" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="8.315 3.444 2.000" rpy="0.0 0.0 112.500"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete"/>
+    </static>
+    <static name="WallPanel_3" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="7.483 5.000 2.000" rpy="0.0 0.0 123.750"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <!-- Panel 4: WINDOW -->
+    <static name="WallFrame_4" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="6.364 6.364 2.000" rpy="0.0 0.0 135.000"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WindowGlass_4" type="box">
+        <dimensions xyz="1.235 0.05 2.200"/>
+        <world_transform xyz="6.364 6.364 2.000" rpy="0.0 0.0 135.000"/>
+        <material name="Glass"/>
+        <look name="window_glass"/>
+    </static>
+    <static name="WindowFrameTrim_4" type="box">
+        <dimensions xyz="1.385 0.12 2.350"/>
+        <world_transform xyz="6.364 6.364 2.000" rpy="0.0 0.0 135.000"/>
+        <material name="Steel"/>
+        <look name="window_frame"/>
+    </static>
+
+    <static name="WallPanel_5" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="5.000 7.483 2.000" rpy="0.0 0.0 146.250"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WallPanel_6" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="3.444 8.315 2.000" rpy="0.0 0.0 157.500"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete"/>
+    </static>
+    <static name="WallPanel_7" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="1.756 8.827 2.000" rpy="0.0 0.0 168.750"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <!-- Panel 8: WINDOW -->
+    <static name="WallFrame_8" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="0.000 9.000 2.000" rpy="0.0 0.0 180.000"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WindowGlass_8" type="box">
+        <dimensions xyz="1.235 0.05 2.200"/>
+        <world_transform xyz="0.000 9.000 2.000" rpy="0.0 0.0 180.000"/>
+        <material name="Glass"/>
+        <look name="window_glass"/>
+    </static>
+    <static name="WindowFrameTrim_8" type="box">
+        <dimensions xyz="1.385 0.12 2.350"/>
+        <world_transform xyz="0.000 9.000 2.000" rpy="0.0 0.0 180.000"/>
+        <material name="Steel"/>
+        <look name="window_frame"/>
+    </static>
+
+    <static name="WallPanel_9" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-1.756 8.827 2.000" rpy="0.0 0.0 191.250"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WallPanel_10" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-3.444 8.315 2.000" rpy="0.0 0.0 202.500"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete"/>
+    </static>
+    <static name="WallPanel_11" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-5.000 7.483 2.000" rpy="0.0 0.0 213.750"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <!-- Panel 12: WINDOW -->
+    <static name="WallFrame_12" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-6.364 6.364 2.000" rpy="0.0 0.0 225.000"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WindowGlass_12" type="box">
+        <dimensions xyz="1.235 0.05 2.200"/>
+        <world_transform xyz="-6.364 6.364 2.000" rpy="0.0 0.0 225.000"/>
+        <material name="Glass"/>
+        <look name="window_glass"/>
+    </static>
+    <static name="WindowFrameTrim_12" type="box">
+        <dimensions xyz="1.385 0.12 2.350"/>
+        <world_transform xyz="-6.364 6.364 2.000" rpy="0.0 0.0 225.000"/>
+        <material name="Steel"/>
+        <look name="window_frame"/>
+    </static>
+
+    <static name="WallPanel_13" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-7.483 5.000 2.000" rpy="0.0 0.0 236.250"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WallPanel_14" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-8.315 3.444 2.000" rpy="0.0 0.0 247.500"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete"/>
+    </static>
+    <static name="WallPanel_15" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-8.827 1.756 2.000" rpy="0.0 0.0 258.750"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <!-- Panel 16: WINDOW -->
+    <static name="WallFrame_16" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-9.000 0.000 2.000" rpy="0.0 0.0 270.000"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WindowGlass_16" type="box">
+        <dimensions xyz="1.235 0.05 2.200"/>
+        <world_transform xyz="-9.000 0.000 2.000" rpy="0.0 0.0 270.000"/>
+        <material name="Glass"/>
+        <look name="window_glass"/>
+    </static>
+    <static name="WindowFrameTrim_16" type="box">
+        <dimensions xyz="1.385 0.12 2.350"/>
+        <world_transform xyz="-9.000 0.000 2.000" rpy="0.0 0.0 270.000"/>
+        <material name="Steel"/>
+        <look name="window_frame"/>
+    </static>
+
+    <static name="WallPanel_17" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-8.827 -1.756 2.000" rpy="0.0 0.0 281.250"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WallPanel_18" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-8.315 -3.444 2.000" rpy="0.0 0.0 292.500"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete"/>
+    </static>
+    <static name="WallPanel_19" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-7.483 -5.000 2.000" rpy="0.0 0.0 303.750"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <!-- Panel 20: WINDOW -->
+    <static name="WallFrame_20" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-6.364 -6.364 2.000" rpy="0.0 0.0 315.000"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WindowGlass_20" type="box">
+        <dimensions xyz="1.235 0.05 2.200"/>
+        <world_transform xyz="-6.364 -6.364 2.000" rpy="0.0 0.0 315.000"/>
+        <material name="Glass"/>
+        <look name="window_glass"/>
+    </static>
+    <static name="WindowFrameTrim_20" type="box">
+        <dimensions xyz="1.385 0.12 2.350"/>
+        <world_transform xyz="-6.364 -6.364 2.000" rpy="0.0 0.0 315.000"/>
+        <material name="Steel"/>
+        <look name="window_frame"/>
+    </static>
+
+    <static name="WallPanel_21" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-5.000 -7.483 2.000" rpy="0.0 0.0 326.250"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WallPanel_22" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-3.444 -8.315 2.000" rpy="0.0 0.0 337.500"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete"/>
+    </static>
+    <static name="WallPanel_23" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-1.756 -8.827 2.000" rpy="0.0 0.0 348.750"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <!-- Panel 24: WINDOW -->
+    <static name="WallFrame_24" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="-0.000 -9.000 2.000" rpy="0.0 0.0 360.000"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WindowGlass_24" type="box">
+        <dimensions xyz="1.235 0.05 2.200"/>
+        <world_transform xyz="-0.000 -9.000 2.000" rpy="0.0 0.0 360.000"/>
+        <material name="Glass"/>
+        <look name="window_glass"/>
+    </static>
+    <static name="WindowFrameTrim_24" type="box">
+        <dimensions xyz="1.385 0.12 2.350"/>
+        <world_transform xyz="-0.000 -9.000 2.000" rpy="0.0 0.0 360.000"/>
+        <material name="Steel"/>
+        <look name="window_frame"/>
+    </static>
+
+    <static name="WallPanel_25" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="1.756 -8.827 2.000" rpy="0.0 0.0 371.250"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WallPanel_26" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="3.444 -8.315 2.000" rpy="0.0 0.0 382.500"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete"/>
+    </static>
+    <static name="WallPanel_27" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="5.000 -7.483 2.000" rpy="0.0 0.0 393.750"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <!-- Panel 28: WINDOW -->
+    <static name="WallFrame_28" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="6.364 -6.364 2.000" rpy="0.0 0.0 405.000"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WindowGlass_28" type="box">
+        <dimensions xyz="1.235 0.05 2.200"/>
+        <world_transform xyz="6.364 -6.364 2.000" rpy="0.0 0.0 405.000"/>
+        <material name="Glass"/>
+        <look name="window_glass"/>
+    </static>
+    <static name="WindowFrameTrim_28" type="box">
+        <dimensions xyz="1.385 0.12 2.350"/>
+        <world_transform xyz="6.364 -6.364 2.000" rpy="0.0 0.0 405.000"/>
+        <material name="Steel"/>
+        <look name="window_frame"/>
+    </static>
+
+    <static name="WallPanel_29" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="7.483 -5.000 2.000" rpy="0.0 0.0 416.250"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+    <static name="WallPanel_30" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="8.315 -3.444 2.000" rpy="0.0 0.0 427.500"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete"/>
+    </static>
+    <static name="WallPanel_31" type="box">
+        <dimensions xyz="1.764 2.000 4.000"/>
+        <world_transform xyz="8.827 -1.756 2.000" rpy="0.0 0.0 438.750"/>
+        <material name="Concrete"/>
+        <look name="wall_concrete_dark"/>
+    </static>
+
+    <!-- ============================================================
+         WALL DETAIL FEATURES
+         Vertical pipes and vent/grating plates mounted flush on the
+         inner wall face, purely for extra high-contrast texture/edges.
+         ============================================================ -->
+    <static name="WallPipe_0" type="cylinder">
+        <dimensions radius="0.06" height="3.60"/>
+        <world_transform xyz="7.895 1.570 2.000" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="pipe_rust"/>
+    </static>
+    <static name="WallPipe_1" type="cylinder">
+        <dimensions radius="0.06" height="3.60"/>
+        <world_transform xyz="5.692 5.692 2.000" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="pipe_rust"/>
+    </static>
+    <static name="WallPipe_2" type="cylinder">
+        <dimensions radius="0.06" height="3.60"/>
+        <world_transform xyz="1.570 7.895 2.000" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="pipe_rust"/>
+    </static>
+    <static name="WallPipe_3" type="cylinder">
+        <dimensions radius="0.06" height="3.60"/>
+        <world_transform xyz="-3.081 7.437 2.000" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="pipe_rust"/>
+    </static>
+    <static name="WallPipe_4" type="cylinder">
+        <dimensions radius="0.06" height="3.60"/>
+        <world_transform xyz="-6.693 4.472 2.000" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="pipe_rust"/>
+    </static>
+    <static name="WallPipe_5" type="cylinder">
+        <dimensions radius="0.06" height="3.60"/>
+        <world_transform xyz="-8.050 0.000 2.000" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="pipe_rust"/>
+    </static>
+    <static name="WallPipe_6" type="cylinder">
+        <dimensions radius="0.06" height="3.60"/>
+        <world_transform xyz="-6.693 -4.472 2.000" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="pipe_rust"/>
+    </static>
+    <static name="WallPipe_7" type="cylinder">
+        <dimensions radius="0.06" height="3.60"/>
+        <world_transform xyz="-3.081 -7.437 2.000" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="pipe_rust"/>
+    </static>
+    <static name="WallPipe_8" type="cylinder">
+        <dimensions radius="0.06" height="3.60"/>
+        <world_transform xyz="1.570 -7.895 2.000" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="pipe_rust"/>
+    </static>
+    <static name="WallPipe_9" type="cylinder">
+        <dimensions radius="0.06" height="3.60"/>
+        <world_transform xyz="5.692 -5.692 2.000" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="pipe_rust"/>
+    </static>
+    <static name="VentGrate_0" type="box">
+        <dimensions xyz="0.6 0.05 0.6"/>
+        <world_transform xyz="7.419 3.073 0.600" rpy="0.0 0.0 112.500"/>
+        <material name="Steel"/>
+        <look name="vent_steel"/>
+    </static>
+    <static name="VentGrate_1" type="box">
+        <dimensions xyz="0.6 0.05 0.6"/>
+        <world_transform xyz="3.073 7.419 1.700" rpy="0.0 0.0 157.500"/>
+        <material name="Steel"/>
+        <look name="vent_steel"/>
+    </static>
+    <static name="VentGrate_2" type="box">
+        <dimensions xyz="0.6 0.05 0.6"/>
+        <world_transform xyz="-3.073 7.419 2.800" rpy="0.0 0.0 202.500"/>
+        <material name="Steel"/>
+        <look name="vent_steel"/>
+    </static>
+    <static name="VentGrate_3" type="box">
+        <dimensions xyz="0.6 0.05 0.6"/>
+        <world_transform xyz="-7.419 3.073 0.600" rpy="0.0 0.0 247.500"/>
+        <material name="Steel"/>
+        <look name="vent_steel"/>
+    </static>
+    <static name="VentGrate_4" type="box">
+        <dimensions xyz="0.6 0.05 0.6"/>
+        <world_transform xyz="-7.419 -3.073 1.700" rpy="0.0 0.0 292.500"/>
+        <material name="Steel"/>
+        <look name="vent_steel"/>
+    </static>
+    <static name="VentGrate_5" type="box">
+        <dimensions xyz="0.6 0.05 0.6"/>
+        <world_transform xyz="-3.073 -7.419 2.800" rpy="0.0 0.0 337.500"/>
+        <material name="Steel"/>
+        <look name="vent_steel"/>
+    </static>
+    <static name="VentGrate_6" type="box">
+        <dimensions xyz="0.6 0.05 0.6"/>
+        <world_transform xyz="3.073 -7.419 0.600" rpy="0.0 0.0 382.500"/>
+        <material name="Steel"/>
+        <look name="vent_steel"/>
+    </static>
+    <static name="VentGrate_7" type="box">
+        <dimensions xyz="0.6 0.05 0.6"/>
+        <world_transform xyz="7.419 -3.073 1.700" rpy="0.0 0.0 427.500"/>
+        <material name="Steel"/>
+        <look name="vent_steel"/>
+    </static>
+
+    <!-- ============================================================
+         DOCK-LIKE STRUCTURE
+         A simple four-legged platform against one side of the tank,
+         a large distinctive structured landmark.
+         ============================================================ -->
+    <static name="DockLeg_0" type="box">
+        <dimensions xyz="0.1 0.1 1.2"/>
+        <world_transform xyz="3.900 -0.500 0.6" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="dock_steel"/>
+    </static>
+    <static name="DockLeg_1" type="box">
+        <dimensions xyz="0.1 0.1 1.2"/>
+        <world_transform xyz="4.900 -0.500 0.6" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="dock_steel"/>
+    </static>
+    <static name="DockLeg_2" type="box">
+        <dimensions xyz="0.1 0.1 1.2"/>
+        <world_transform xyz="3.900 0.500 0.6" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="dock_steel"/>
+    </static>
+    <static name="DockLeg_3" type="box">
+        <dimensions xyz="0.1 0.1 1.2"/>
+        <world_transform xyz="4.900 0.500 0.6" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="dock_steel"/>
+    </static>
+    <static name="DockPlatform" type="box">
+        <dimensions xyz="1.3 1.3 0.08"/>
+        <world_transform xyz="4.400 0.000 1.24" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="dock_steel"/>
+    </static>
+    <static name="DockMarkerPost" type="cylinder">
+        <dimensions radius="0.04" height="0.9"/>
+        <world_transform xyz="4.400 0.000 1.73" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="obstacle_yellow"/>
+    </static>
+
+    <!-- ============================================================
+         SCATTERED OBSTACLES
+         Mixed boxes / cylinders / spheres, varied high-contrast colors,
+         placed away from walls and from each other for a feature-rich
+         interior suited to visual SLAM.
+         ============================================================ -->
+    <static name="Obstacle_0" type="sphere">
+        <dimensions radius="0.37"/>
+        <world_transform xyz="0.420 2.470 0.369" rpy="0.0 0.0 0.0"/>
+        <material name="Rock"/>
+        <look name="obstacle_red"/>
+    </static>
+    <static name="Obstacle_1" type="cylinder">
+        <dimensions radius="0.16" height="0.62"/>
+        <world_transform xyz="5.410 3.289 0.309" rpy="0.0 0.0 0.0"/>
+        <material name="Rock"/>
+        <look name="obstacle_yellow"/>
+    </static>
+    <static name="Obstacle_2" type="sphere">
+        <dimensions radius="0.26"/>
+        <world_transform xyz="-1.196 -1.644 0.255" rpy="0.0 0.0 0.0"/>
+        <material name="Plastic"/>
+        <look name="obstacle_blue"/>
+    </static>
+    <static name="Obstacle_3" type="box">
+        <dimensions xyz="0.65 0.47 0.44"/>
+        <world_transform xyz="1.625 -4.147 0.220" rpy="0.0 0.0 344.6"/>
+        <material name="Rock"/>
+        <look name="obstacle_green"/>
+    </static>
+    <static name="Obstacle_4" type="box">
+        <dimensions xyz="0.72 0.60 1.03"/>
+        <world_transform xyz="2.410 1.589 0.513" rpy="0.0 0.0 262.7"/>
+        <material name="Plastic"/>
+        <look name="obstacle_orange"/>
+    </static>
+    <static name="Obstacle_5" type="sphere">
+        <dimensions radius="0.42"/>
+        <world_transform xyz="-2.980 -1.011 0.421" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="obstacle_white"/>
+    </static>
+    <static name="Obstacle_6" type="cylinder">
+        <dimensions radius="0.26" height="1.23"/>
+        <world_transform xyz="4.078 -4.540 0.617" rpy="0.0 0.0 0.0"/>
+        <material name="Plastic"/>
+        <look name="obstacle_black"/>
+    </static>
+    <static name="Obstacle_7" type="sphere">
+        <dimensions radius="0.38"/>
+        <world_transform xyz="-1.111 1.427 0.375" rpy="0.0 0.0 0.0"/>
+        <material name="Plastic"/>
+        <look name="obstacle_red"/>
+    </static>
+    <static name="Obstacle_8" type="sphere">
+        <dimensions radius="0.33"/>
+        <world_transform xyz="4.539 2.185 0.334" rpy="0.0 0.0 0.0"/>
+        <material name="Rock"/>
+        <look name="obstacle_yellow"/>
+    </static>
+    <static name="Obstacle_9" type="cylinder">
+        <dimensions radius="0.32" height="0.62"/>
+        <world_transform xyz="-2.253 0.544 0.310" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="obstacle_blue"/>
+    </static>
+    <static name="Obstacle_10" type="box">
+        <dimensions xyz="0.71 0.70 0.66"/>
+        <world_transform xyz="0.323 -2.792 0.331" rpy="0.0 0.0 23.8"/>
+        <material name="Rock"/>
+        <look name="obstacle_green"/>
+    </static>
+    <static name="Obstacle_11" type="sphere">
+        <dimensions radius="0.25"/>
+        <world_transform xyz="-5.894 -2.647 0.253" rpy="0.0 0.0 0.0"/>
+        <material name="Plastic"/>
+        <look name="obstacle_orange"/>
+    </static>
+    <static name="Obstacle_12" type="sphere">
+        <dimensions radius="0.24"/>
+        <world_transform xyz="2.917 -2.582 0.236" rpy="0.0 0.0 0.0"/>
+        <material name="Plastic"/>
+        <look name="obstacle_white"/>
+    </static>
+    <static name="Obstacle_13" type="cylinder">
+        <dimensions radius="0.25" height="0.62"/>
+        <world_transform xyz="-0.078 -4.141 0.310" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="obstacle_black"/>
+    </static>
+    <static name="Obstacle_14" type="box">
+        <dimensions xyz="0.73 0.38 0.44"/>
+        <world_transform xyz="-6.972 -0.418 0.222" rpy="0.0 0.0 245.0"/>
+        <material name="Rock"/>
+        <look name="obstacle_red"/>
+    </static>
+    <static name="Obstacle_15" type="sphere">
+        <dimensions radius="0.33"/>
+        <world_transform xyz="-3.369 2.979 0.332" rpy="0.0 0.0 0.0"/>
+        <material name="Plastic"/>
+        <look name="obstacle_yellow"/>
+    </static>
+    <static name="Obstacle_16" type="sphere">
+        <dimensions radius="0.39"/>
+        <world_transform xyz="-0.159 -0.856 0.388" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="obstacle_blue"/>
+    </static>
+    <static name="Obstacle_17" type="cylinder">
+        <dimensions radius="0.19" height="0.40"/>
+        <world_transform xyz="-2.987 4.696 0.202" rpy="0.0 0.0 0.0"/>
+        <material name="Plastic"/>
+        <look name="obstacle_green"/>
+    </static>
+    <static name="Obstacle_18" type="sphere">
+        <dimensions radius="0.33"/>
+        <world_transform xyz="-0.999 -5.182 0.327" rpy="0.0 0.0 0.0"/>
+        <material name="Rock"/>
+        <look name="obstacle_orange"/>
+    </static>
+    <static name="Obstacle_19" type="sphere">
+        <dimensions radius="0.35"/>
+        <world_transform xyz="1.725 -0.519 0.350" rpy="0.0 0.0 0.0"/>
+        <material name="Rock"/>
+        <look name="obstacle_white"/>
+    </static>
+    <static name="Obstacle_20" type="box">
+        <dimensions xyz="0.77 0.34 0.74"/>
+        <world_transform xyz="0.384 5.789 0.369" rpy="0.0 0.0 24.9"/>
+        <material name="Steel"/>
+        <look name="obstacle_black"/>
+    </static>
+    <static name="Obstacle_21" type="box">
+        <dimensions xyz="0.54 0.57 0.54"/>
+        <world_transform xyz="0.548 -5.488 0.269" rpy="0.0 0.0 314.1"/>
+        <material name="Steel"/>
+        <look name="obstacle_red"/>
+    </static>
+    <static name="Obstacle_22" type="cylinder">
+        <dimensions radius="0.26" height="0.65"/>
+        <world_transform xyz="-4.101 -5.636 0.324" rpy="0.0 0.0 0.0"/>
+        <material name="Steel"/>
+        <look name="obstacle_yellow"/>
+    </static>
+    <static name="Obstacle_23" type="box">
+        <dimensions xyz="0.65 0.33 0.36"/>
+        <world_transform xyz="-3.597 -2.234 0.180" rpy="0.0 0.0 11.3"/>
+        <material name="Rock"/>
+        <look name="obstacle_blue"/>
+    </static>
+
+    <!-- Placed 24 obstacles (requested 24); increase attempts/relax
+         min_sep in the generator if you need a denser field. -->
+
+    <!-- ============================================================
+         LIGHTING
+         A few point lights so surfaces are shaded (helps SLAM feature
+         extraction see contrast, not just flat ambient color).
+         ============================================================ -->
+    <light name="TankLight_0">
+        <specs radius="0.05" illuminance="8000.0"/>
+        <color rgb="1.0 1.0 0.95"/>
+        <world_transform xyz="4.800 0.000 3.70" rpy="0.0 0.0 0.0"/>
+    </light>
+    <light name="TankLight_1">
+        <specs radius="0.05" illuminance="8000.0"/>
+        <color rgb="1.0 1.0 0.95"/>
+        <world_transform xyz="2.400 4.157 3.70" rpy="0.0 0.0 0.0"/>
+    </light>
+    <light name="TankLight_2">
+        <specs radius="0.05" illuminance="8000.0"/>
+        <color rgb="1.0 1.0 0.95"/>
+        <world_transform xyz="-2.400 4.157 3.70" rpy="0.0 0.0 0.0"/>
+    </light>
+    <light name="TankLight_3">
+        <specs radius="0.05" illuminance="8000.0"/>
+        <color rgb="1.0 1.0 0.95"/>
+        <world_transform xyz="-4.800 0.000 3.70" rpy="0.0 0.0 0.0"/>
+    </light>
+    <light name="TankLight_4">
+        <specs radius="0.05" illuminance="8000.0"/>
+        <color rgb="1.0 1.0 0.95"/>
+        <world_transform xyz="-2.400 -4.157 3.70" rpy="0.0 0.0 0.0"/>
+    </light>
+    <light name="TankLight_5">
+        <specs radius="0.05" illuminance="8000.0"/>
+        <color rgb="1.0 1.0 0.95"/>
+        <world_transform xyz="2.400 -4.157 3.70" rpy="0.0 0.0 0.0"/>
+    </light>
+
+    <include file="$(find my_rov_sim)/scenarios/rov_3.scn"/>
+
+</scenario>

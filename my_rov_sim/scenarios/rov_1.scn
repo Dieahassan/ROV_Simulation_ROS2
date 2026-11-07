@@ -1,0 +1,265 @@
+<?xml version="1.0"?>
+<scenario>
+
+	<robot name="rov2" fixed="false" self_collisions="false">
+
+		<base_link name="base_link" type="compound" physics="submerged">
+
+			<external_part name="BaseFrame" type="model" physics="submerged" buoyant="false">
+				<visual>
+					<mesh filename="rov_2/meshe/base_link.obj" scale="1.0"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</visual>
+				<physical>
+					<mesh filename="rov_2/meshe/base_link.obj" scale="1.0"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Acrylic"/>
+				<look name="transparent"/>
+				<compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+			</external_part>
+
+			<external_part name="TopPlate" type="model" physics="submerged" buoyant="false">
+				<visual>
+					<mesh filename="rov_2/meshe/top_plate.obj" scale="1.0"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</visual>
+				<physical>
+					<mesh filename="rov_2/meshe/top_plate.obj" scale="1.0"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Polyethylene"/>
+				<look name="blue"/>
+				<compound_transform rpy="1.5708 0.0 0.0" xyz="0.0 0.0 0.11279"/>
+			</external_part>
+
+			<external_part name="DownPlate" type="model" physics="submerged" buoyant="false">
+				<visual>
+					<mesh filename="rov_2/meshe/down_plate.obj" scale="1.0"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</visual>
+				<physical>
+					<mesh filename="rov_2/meshe/down_plate.obj" scale="1.0"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Polyethylene"/>
+				<look name="blue"/>
+				<compound_transform rpy="1.5708 0.0 0.0" xyz="0.0091292 0.0 -0.13221"/>
+			</external_part>
+
+			<external_part name="CameraHolder" type="model" physics="submerged" buoyant="false">
+				<visual>
+					<mesh filename="rov_2/meshe/camera_holder.obj" scale="1.0"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</visual>
+				<physical>
+					<mesh filename="rov_2/meshe/camera_holder.obj" scale="1.0"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Polyethylene"/>
+				<look name="White"/>
+				<compound_transform rpy="1.5708 0.0 0.0" xyz="0.0091292 0.0 -0.13221"/>
+			</external_part>
+
+			<internal_part name="FoamBlock" type="cylinder" physics="submerged" buoyant="true">
+				<dimensions radius="0.157" height="0.036"/>
+				<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.10"/>
+				<material name="Foam"/>
+				<look name="transparent"/>
+				<compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+			</internal_part>
+
+			<external_part name="camera_f" type="model" physics="submerged" buoyant="false">
+				<visual>
+					<mesh filename="rov_2/meshe/camera_f.obj" scale="1.0"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</visual>
+				<physical>
+					<mesh filename="rov_2/meshe/camera_f.obj" scale="1.0"/>
+					<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+				</physical>
+				<material name="Acrylic"/>
+				<look name="transparent"/>
+				<compound_transform rpy="0 0.0 0.0" xyz="0.165 0.0 -0.0"/>
+			</external_part>
+
+			<internal_part name="BallastWeight" type="box" physics="submerged" buoyant="false">
+				<dimensions xyz="0.20 0.20 0.04"/>
+				<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 -0.10"/>
+				<material name="Ballast"/>
+				<look name="transparent"/>
+				<compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+			</internal_part>
+
+			
+
+		</base_link>
+
+		<actuator name="Thruster_FR" type="thruster">
+			<origin rpy="0.0 0.0 -${45*pi/180}" xyz="0.1412 0.1175 0.0036"/>
+			<specs max_setpoint="300.0" inverted_setpoint="false" normalized_setpoint="true"/>
+			<propeller diameter="0.08" right="true">
+				<mesh filename="rov_2/meshe/fr.obj" scale="1.0"/>
+				<material name="Polyethylene"/>
+				<look name="cyan"/>
+			</propeller>
+			<rotor_dynamics type="first_order">
+				<time_constant value="0.05"/>
+			</rotor_dynamics>
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.08" reverse="0.08"/>
+				<torque_coeff value="0.01"/>
+			</thrust_model>
+			<link name="base_link"/>
+		</actuator>
+
+		<actuator name="Thruster_FL" type="thruster">
+			<origin rpy="0.0 0.0 ${45*pi/180}" xyz="0.1412 -0.1175 0.0036"/>
+			<specs max_setpoint="300.0" inverted_setpoint="false" normalized_setpoint="false"/>
+			<propeller diameter="0.08" right="false">
+				<mesh filename="rov_2/meshe/fl.obj" scale="1.0"/>
+				<material name="Polyethylene"/>
+				<look name="cyan"/>
+			</propeller>
+			<rotor_dynamics type="first_order">
+				<time_constant value="0.05"/>
+			</rotor_dynamics>
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.08" reverse="0.08"/>
+				<torque_coeff value="0.01"/>
+			</thrust_model>
+			<link name="base_link"/>
+		</actuator>
+
+		<actuator name="Thruster_MR" type="thruster">
+			<origin rpy="0.0 ${90*pi/180} 0.0" xyz="0.0 0.1175 0.0"/>
+			<specs max_setpoint="300.0" inverted_setpoint="false" normalized_setpoint="true"/>
+			<propeller diameter="0.08" right="true">
+				<mesh filename="rov_2/meshe/mr.obj" scale="1.0"/>
+				<material name="Polyethylene"/>
+				<look name="cyan"/>
+			</propeller>
+			<rotor_dynamics type="first_order">
+				<time_constant value="0.05"/>
+			</rotor_dynamics>
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.08" reverse="0.08"/>
+				<torque_coeff value="0.01"/>
+			</thrust_model>
+			<link name="base_link"/>
+		</actuator>
+
+		<actuator name="Thruster_ML" type="thruster">
+			<origin rpy="0.0 ${90*pi/180} 0.0" xyz="0.0 -0.1175 0.0"/>
+			<specs max_setpoint="300.0" inverted_setpoint="false" normalized_setpoint="false"/>
+			<propeller diameter="0.08" right="false">
+				<mesh filename="rov_2/meshe/ml.obj" scale="1.0"/>
+				<material name="Polyethylene"/>
+				<look name="cyan"/>
+			</propeller>
+			<rotor_dynamics type="first_order">
+				<time_constant value="0.05"/>
+			</rotor_dynamics>
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.08" reverse="0.08"/>
+				<torque_coeff value="0.01"/>
+			</thrust_model>
+			<link name="base_link"/>
+		</actuator>
+
+		<actuator name="Thruster_BR" type="thruster">
+			<origin rpy="0.0 0.0 ${45*pi/180}" xyz="-0.1412 0.1175 0.0036"/>
+			<specs max_setpoint="300.0" inverted_setpoint="false" normalized_setpoint="true"/>
+			<propeller diameter="0.08" right="true">
+				<mesh filename="rov_2/meshe/br.obj" scale="1.0"/>
+				<material name="Polyethylene"/>
+				<look name="cyan"/>
+			</propeller>
+			<rotor_dynamics type="first_order">
+				<time_constant value="0.05"/>
+			</rotor_dynamics>
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.08" reverse="0.08"/>
+				<torque_coeff value="0.01"/>
+			</thrust_model>
+			<link name="base_link"/>
+		</actuator>
+
+		<actuator name="Thruster_BL" type="thruster">
+			<origin rpy="0.0 0.0 -${45*pi/180}" xyz="-0.1412 -0.1175 0.0036"/>
+			<specs max_setpoint="300.0" inverted_setpoint="false" normalized_setpoint="false"/>
+			<propeller diameter="0.08" right="false">
+				<mesh filename="rov_2/meshe/bl.obj" scale="1.0"/>
+				<material name="Polyethylene"/>
+				<look name="cyan"/>
+			</propeller>
+			<rotor_dynamics type="first_order">
+				<time_constant value="0.05"/>
+			</rotor_dynamics>
+			<thrust_model type="fluid_dynamics">
+				<thrust_coeff forward="0.08" reverse="0.08"/>
+				<torque_coeff value="0.01"/>
+			</thrust_model>
+			<link name="base_link"/>
+		</actuator>
+
+		<sensor name="camera_front" rate="15.0" type="depthcamera">
+			<specs resolution_x="800" resolution_y="600" horizontal_fov="85.0" depth_min="0.2" depth_max="50"/>
+			<noise depth="0.0"/>
+			<origin xyz="0.25 0.0 0.0" rpy="1.5708 0.0 1.5708"/>
+			<link name="base_link"/>
+			<ros_publisher topic="/rov_2/camera_front"/>
+		</sensor>
+
+		<sensor name="camera_down" rate="15.0" type="depthcamera">
+			<specs resolution_x="800" resolution_y="600" horizontal_fov="85.0" depth_min="0.2" depth_max="50"/>
+			<noise depth="0.0"/>
+			<origin xyz="-0.038 -0.056 -0.2" rpy="3.1416 0.0 0.0"/>
+			<link name="base_link"/>
+			<ros_publisher topic="/rov_2/camera_down"/>
+		</sensor>
+
+		<sensor name="imu" rate="20.0" type="imu">
+			<link name="base_link"/>
+			<range angular_velocity="10.0 10.0 5.0" linear_acceleration="10.0"/>
+			<noise angle="0.01 0.01 0.05" angular_velocity="0.01" yaw_drift="0.001" linear_acceleration="0.05"/>
+			<history samples="1"/>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+			<ros_publisher topic="/rov_2/imu"/>
+		</sensor>
+
+		<sensor name="pressure" rate="10.0" type="pressure">
+			<link name="base_link"/>
+			<range pressure="10000.0"/>
+			<noise pressure="0.1"/>
+			<history samples="1"/>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+			<ros_publisher topic="/rov_2/pressure"/>
+		</sensor>
+		<sensor name="MSIS" type="msis">
+			<link name="base_link"/>
+			<specs step="1.0" bins="500" horizontal_beam_width="2.0" vertical_beam_width="30.0" />
+			<setting range_min="0.5" range_max="10.0" rotation_min="-50.0" rotation_max="50" gain="1.5" />
+			<noise multiplicative="0.02" additive="0.03"/>
+			<display colormap="hot" />
+			<origin xyz="0.0 0.0 0.0" rpy="${pi/2} 0.0 0.0"/>
+			<ros_publisher topic="/rov_2/sonar"/>
+		</sensor>
+		<!--<sensor name="FLS" type="fls">
+    <specs beams="512" bins="500" horizontal_fov="120.0" vertical_fov="30.0" output_format="uint16"/>
+    <settings range_min="0.5" range_max="10.0" gain="1.1"/>
+    <noise multiplicative="0.01" additive="0.02"/>
+    <display colormap="hot"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    <link name="base_link"/>
+</sensor>-->
+
+		<world_transform rpy="${pi} 0.0 0.0" xyz="0.0 0.0 1.5"/>
+
+		<ros_subscriber thrusters="/rov_2/controller/thruster_setpoints" forces="/rov_2/controller/thruster_manager/input_stamped"/>
+		<ros_publisher thrusters="/rov_2/controller/thruster_state" forces="/rov_2/controller/thruster_manager/output"/>
+		<ros_base_link_transforms publish="true"/>
+
+	</robot>
+
+</scenario>
