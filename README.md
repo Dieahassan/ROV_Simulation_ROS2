@@ -109,5 +109,5 @@ license the complete project. Do not replace third-party copyright or license no
 
 - Generated build/install/log folders, Python bytecode, caches, and machine-specific
   build artifacts are excluded.
-- MOLA AUV-named files and the bundled `stonefish_ros2` source package were removed
+- the bundled `stonefish_ros2` source package were removed
   from this cleaned archive.
