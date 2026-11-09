@@ -43,7 +43,7 @@
     <!--   Inlcude Addiitonal world actuators/sensors (lights, cameras, etc) not attached to Robots  -->
 
     <!--   Inlcude Robots  -->
-    <include file="$(find my_rov_sim)/scenarios/rov_3 _try.scn"/>
+    <include file="$(find my_rov_sim)/scenarios/rov_3_try.scn"/>
     <!-- <include file="$(find bluerov2_sim)/scenarios/bluerov2.scn"/> -->
 
 
