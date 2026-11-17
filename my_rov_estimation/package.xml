@@ -11,6 +11,10 @@
   <depend>std_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>rclpy</depend>
+  <depend>geometry_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>python3-opencv</depend>
+  <depend>python3-numpy</depend>
   
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

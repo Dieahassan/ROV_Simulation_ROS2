@@ -1,23 +1,26 @@
-%YAML:1.0
----
+%YAML:1.0 # need to specify the file type at the top!
 
-verbosity: "INFO"
+verbosity: "INFO" # ALL, DEBUG, INFO, WARNING, ERROR, SILENT
 
 use_fej: true
 integration: "rk4"
-use_stereo: false
-max_cameras: 1 # كاميرا أحادية للغواصة
 
-calib_cam_extrinsics: true
-calib_cam_intrinsics: true
-calib_cam_timeoffset: true
+# Two NON-overlapping cameras (front + down): track each one as mono.
+# NOTE: the launch file also forces these two values, because the node
+# parameters override this file.
+use_stereo: false
+max_cameras: 2
+
+calib_cam_extrinsics: true  # refine the T_cam_imu derived from the scenario
+calib_cam_intrinsics: false # simulator intrinsics are exact (ideal pinhole)
+calib_cam_timeoffset: true  # sensor stamps are taken at publish time
 calib_imu_intrinsics: false
 calib_imu_g_sensitivity: false
 
 max_clones: 11
 max_slam: 50
 max_slam_in_update: 25
-max_msckf_in_update: 20
+max_msckf_in_update: 40
 dt_slam_delay: 1
 
 gravity_mag: 9.81
@@ -33,8 +36,15 @@ zupt_noise_multiplier: 10
 zupt_max_disparity: 0.5
 zupt_only_at_beginning: false
 
+# ------------------------------------------------------------------
+# Initialization
+# ------------------------------------------------------------------
 init_window_time: 2.0
-init_imu_thresh: 1.5
+# std-dev of the accelerometer needed to detect the "jerk" that ends the static
+# window. 1.5 (EuRoC default) is far too high for a slow ROV: lowered.
+# If initialization never happens, lower it further (0.2); if it triggers on
+# noise, raise it. Simulated accel noise is only 0.05 m/s^2.
+init_imu_thresh: 0.15
 init_max_disparity: 10.0
 init_max_features: 50
 
@@ -63,17 +73,20 @@ filepath_est: "/tmp/ov_estimate.txt"
 filepath_std: "/tmp/ov_estimate_std.txt"
 filepath_gt: "/tmp/ov_groundtruth.txt"
 
+# ------------------------------------------------------------------
+# Front-end (per camera)
+# ------------------------------------------------------------------
 use_klt: true
-num_pts: 150
-fast_threshold: 20
+num_pts: 200              # per camera
+fast_threshold: 15        # pool/underwater scenes have low texture
 grid_x: 5
 grid_y: 5
-min_px_dist: 10
+min_px_dist: 15
 knn_ratio: 0.70
-track_frequency: 15.0 # متوافق مع freq_cam للغواصة
+track_frequency: 15.0     # = camera rate in rov_3.scn
 downsample_cameras: false
-num_opencv_threads: 2
-histogram_method: "HISTOGRAM"
+num_opencv_threads: 4
+histogram_method: "HISTOGRAM" # try CLAHE on real (hazy) footage
 
 use_aruco: false
 num_aruco: 0
@@ -88,7 +101,6 @@ up_aruco_chi2_multipler: 1
 
 use_mask: false
 
-
-# الربط مع الملفين المساعدين في نفس المجلد
+# imu and camera spatial-temporal calibration (same folder as this file)
 relative_config_imu: "kalibr_imu_chain.yaml"
 relative_config_imucam: "kalibr_imucam_chain.yaml"

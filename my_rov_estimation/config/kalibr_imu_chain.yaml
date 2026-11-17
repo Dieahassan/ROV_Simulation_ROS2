@@ -1,8 +1,45 @@
 %YAML:1.0
----
 
-accelerometer_noise_density: 0.08
-accelerometer_random_walk: 0.00004
-gyroscope_noise_density: 0.004
-gyroscope_random_walk: 0.00002
-update_rate: 100.0
+# Stonefish IMU (rov_3.scn): rate = 100 Hz, per-sample noise:
+#   angular_velocity = 0.01 rad/s, linear_acceleration = 0.05 m/s^2
+# Continuous-time noise density = sigma_sample * sqrt(dt) = sigma * sqrt(0.01)
+#   gyro  0.01 * 0.1 = 0.001      accel 0.05 * 0.1 = 0.005
+# Values below are inflated x2 for unmodelled effects. The simulator has no
+# bias random walk, so those are small but non-zero (OpenVINS needs > 0).
+
+imu0:
+  T_i_b:
+    - [1.0, 0.0, 0.0, 0.0]
+    - [0.0, 1.0, 0.0, 0.0]
+    - [0.0, 0.0, 1.0, 0.0]
+    - [0.0, 0.0, 0.0, 1.0]
+  accelerometer_noise_density: 0.01
+  accelerometer_random_walk: 0.0001
+  gyroscope_noise_density: 0.002
+  gyroscope_random_walk: 0.00001
+  rostopic: /rov_2/imu
+  time_offset: 0.0
+  update_rate: 100
+  # three different modes supported:
+  # "calibrated" (same as "kalibr"), "kalibr", "rpng"
+  model: "kalibr"
+  Tw:
+    - [ 1.0, 0.0, 0.0 ]
+    - [ 0.0, 1.0, 0.0 ]
+    - [ 0.0, 0.0, 1.0 ]
+  R_IMUtoGYRO:
+    - [ 1.0, 0.0, 0.0 ]
+    - [ 0.0, 1.0, 0.0 ]
+    - [ 0.0, 0.0, 1.0 ]
+  Ta:
+    - [ 1.0, 0.0, 0.0 ]
+    - [ 0.0, 1.0, 0.0 ]
+    - [ 0.0, 0.0, 1.0 ]
+  R_IMUtoACC:
+    - [ 1.0, 0.0, 0.0 ]
+    - [ 0.0, 1.0, 0.0 ]
+    - [ 0.0, 0.0, 1.0 ]
+  Tg:
+    - [ 0.0, 0.0, 0.0 ]
+    - [ 0.0, 0.0, 0.0 ]
+    - [ 0.0, 0.0, 0.0 ]

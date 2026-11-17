@@ -208,14 +208,14 @@
 
 
 		<sensor name="camera_front" rate="15.0" type="camera">
-			<specs resolution_x="800" resolution_y="600" horizontal_fov="85.0"/>
+			<specs resolution_x="640" resolution_y="480" horizontal_fov="85.0"/>
 			<origin xyz="0.25 0.0 0.0" rpy="${pi}  ${pi*3/2} 0.0"/>
 			<link name="base_link"/>
 			<ros_publisher topic="/rov_2/camera_front"/>
 		</sensor>
 
 		<sensor name="camera_down" rate="15.0" type="camera">
-			<specs resolution_x="800" resolution_y="600" horizontal_fov="85.0"/>
+			<specs resolution_x="640" resolution_y="480" horizontal_fov="85.0"/>
 			<origin xyz="-0.038 -0.2 -0.0" rpy="${3.1416/2} 0.0 0.0"/>
 			<link name="base_link"/>
 			<ros_publisher topic="/rov_2/camera_down"/>

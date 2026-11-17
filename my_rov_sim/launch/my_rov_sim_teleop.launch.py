@@ -2,6 +2,7 @@ import os
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, GroupAction, IncludeLaunchDescription, TimerAction
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch.conditions import IfCondition
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch.substitutions import Command
@@ -94,7 +95,8 @@ def generate_launch_description():
     my_rov_apriltag_node = Node(
             package='my_rov_estimation',
             executable='my_rov_apriltag_estimation',
-            output='screen'
+            output='screen',
+            condition=IfCondition(LaunchConfiguration('apriltag'))
         )
 
     rviz_node =  Node(
@@ -102,11 +104,14 @@ def generate_launch_description():
             namespace='',
             executable='rviz2',
             name='rviz2',
-            arguments=['-d' + os.path.join(get_package_share_directory('my_rov_sim'), 'cfg', 'my_rov_sim.rviz')]
+            arguments=['-d' + os.path.join(get_package_share_directory('my_rov_sim'), 'cfg', 'my_rov_sim.rviz')],
+            condition=IfCondition(LaunchConfiguration('rviz'))
         )
     
     return LaunchDescription([
         robot_name_arg,
+        DeclareLaunchArgument('rviz', default_value='true', description='launch RViz'),
+        DeclareLaunchArgument('apriltag', default_value='true', description='launch the AprilTag estimation node'),
         namespace_action,
         odom2tf_node, 
         static_tf_node,

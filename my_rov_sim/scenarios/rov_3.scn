@@ -307,7 +307,7 @@
 		<sensor name="imu" rate="100.0" type="imu">
 			<link name="base_link"/>
 			<range angular_velocity="10.0 10.0 5.0" linear_acceleration="10.0"/>
-			<!--<noise angle="0.01 0.01 0.05" angular_velocity="0.01" yaw_drift="0.001" linear_acceleration="0.05"/>-->
+			<noise angle="0.01 0.01 0.05" angular_velocity="0.01" yaw_drift="0.0" linear_acceleration="0.05"/>
 			<history samples="1"/>
 			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
 			<ros_publisher topic="/rov_2/imu"/>

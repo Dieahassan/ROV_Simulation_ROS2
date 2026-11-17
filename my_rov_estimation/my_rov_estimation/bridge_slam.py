@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 
-"""Forward the ROV stereo camera and IMU topics to SLAM topic names."""
+"""Optional relay: ROV front/down cameras and IMU -> /cam0, /cam1, /imu0.
+
+Not needed for the OpenVINS launch (config/kalibr_*.yaml already point at the
+simulator topics). Kept for tools that expect the default /cam0 /cam1 /imu0
+names. cam0 = front camera, cam1 = down camera (the two do NOT overlap, so
+never run OpenVINS stereo on them).
+"""
 
 import rclpy
 from rclpy.node import Node
@@ -15,7 +21,7 @@ class SlamSensorBridge(Node):
         topic_defaults = {
             'camera0_input': '/rov_2/camera_front/image_color',
             'camera0_output': '/cam0/image_raw',
-            'camera1_input': '/rov_2/camera_front/image_color',
+            'camera1_input': '/rov_2/camera_down/image_color',
             'camera1_output': '/cam1/image_raw',
             'imu_input': '/rov_2/imu',
             'imu_output': '/imu0',

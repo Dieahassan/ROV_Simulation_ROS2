@@ -1,13 +1,49 @@
 %YAML:1.0
----
 
-rov_2:
-  camera_model: "pinhole"
-  intrinsics: [462.0, 462.0, 400.0, 300.0] # fx, fy, cx, cy
-  resolution: [800, 600]
-  distortion_coeffs: [0.0, 0.0, 0.0, 0.0]
+# Stonefish scenario: my_rov_sim/scenarios/rov_3.scn
+# Both cameras: 640x480, horizontal_fov = 85 deg, 15 Hz, ideal pinhole, no distortion.
+#   fx = fy = (640/2) / tan(85/2 deg) = 349.2   cx = 320   cy = 240
+#
+# IMU frame = base_link (IMU origin/rpy are identity in the scenario).
+# base_link axes (derived from world_transform and the camera mounts):
+#   x = forward, y = up, z = right (starboard)
+# Stonefish camera frame = OpenCV optical frame (x right, y down, z forward).
+#
+# T_cam_imu maps a point from the IMU frame into the camera frame.
+#
+# cam0 = camera_front  origin xyz=(0.25, 0, 0)       rpy=(pi, 3pi/2, 0)
+# cam1 = camera_down   origin xyz=(-0.038, -0.2, 0)  rpy=(pi/2, 0, 0)
+#
+# calib_cam_extrinsics is enabled in the estimator config so small errors in
+# these numbers are refined online. A wrong rotation is NOT recoverable,
+# check the first run with the front camera only if init fails.
+
+cam0:
   T_cam_imu:
-    - [0.0, -1.0, 0.0, 0.25]
-    - [1.0,  0.0, 0.0, 0.0]
-    - [0.0,  0.0, 1.0, 0.0]
-    - [0.0,  0.0, 0.0, 1.0]
+    - [0.0,  0.0, 1.0,  0.0]
+    - [0.0, -1.0, 0.0,  0.0]
+    - [1.0,  0.0, 0.0, -0.25]
+    - [0.0,  0.0, 0.0,  1.0]
+  cam_overlaps: []
+  camera_model: pinhole
+  distortion_coeffs: [0.0, 0.0, 0.0, 0.0]
+  distortion_model: radtan
+  intrinsics: [349.2, 349.2, 320.0, 240.0]
+  resolution: [640, 480]
+  rostopic: /rov_2/camera_front/image_color
+  timeshift_cam_imu: 0.0
+
+cam1:
+  T_cam_imu:
+    - [1.0,  0.0, 0.0,  0.038]
+    - [0.0,  0.0, 1.0,  0.0]
+    - [0.0, -1.0, 0.0, -0.2]
+    - [0.0,  0.0, 0.0,  1.0]
+  cam_overlaps: []
+  camera_model: pinhole
+  distortion_coeffs: [0.0, 0.0, 0.0, 0.0]
+  distortion_model: radtan
+  intrinsics: [349.2, 349.2, 320.0, 240.0]
+  resolution: [640, 480]
+  rostopic: /rov_2/camera_down/image_color
+  timeshift_cam_imu: 0.0

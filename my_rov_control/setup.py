@@ -28,6 +28,7 @@ setup(
             'my_rov_keybead_teleop=my_rov_control.my_rov_keybead_teleop:main',
             'my_odom2tf = my_rov_control.odom2tf:main',
             'odom2tf = my_rov_control.odom2tf_2:main',
+            'p2z = my_rov_control.p2z:main',
         ],
     },
 )
